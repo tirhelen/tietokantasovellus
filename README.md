@@ -14,5 +14,4 @@ Nykytilanne:
 Sovellukseen voi luoda käyttäjätilin ja kirjautua sisään.
 Epäonnistunutta käyttäjätilin luontia / sisäänkirjautumista ei vielä käsitellä.
 Sovelluksessa ei voi vielä tehdä mitään.
-En saanut sovellusta toimimaan vielä Herokussa (osoite tulee olemaan: https://tsoha-euron-visiot.herokuapp.com/).
-Sovellus pitäisi saada "käyntiin" kuitenkin venv- ympäristössä flask run- komennon kautta
+Sovellus löytyy Herokusta osoitteesta:  https://tsoha-euron-visiot.herokuapp.com/

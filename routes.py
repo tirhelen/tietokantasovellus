@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, flash
 import users
 
 
@@ -15,13 +15,15 @@ def login():
                 return render_template("login.html")
 
         if request.method == "POST":
-                kayttajanimi = request.form["username"]
-                salasana = request.form["password"]
+                username = request.form["username"]
+                password = request.form["password"]
 
-                if users.login(kayttajanimi, password):
+                if users.login(username, password):
                         return redirect("/")
                 else:
-                        return redirect("/")
+                        error = "Väärä käyttäjänimi tai salasana"
+                        flash(error)
+                        #return redirect("/")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -33,7 +35,7 @@ def register():
         if request.method == "POST":
                 username = request.form["username"]
                 password = request.form["password"]
-                
+
                 if users.register(username,password):
                         return redirect("/")
                 else:

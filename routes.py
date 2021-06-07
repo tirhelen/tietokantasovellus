@@ -38,6 +38,10 @@ def register():
                 if users.register(username,password):
                         return redirect("/")
                 else:
-                        error = "Rekisteröityminen epäonnistui."
-                        return render_template("error.html", message=error)
+                        message = "Rekisteröityminen epäonnistui."
+                        error(message)
+
+@app.route("/error")
+def error(message):
+        return render_template("error.html", message=message)
 

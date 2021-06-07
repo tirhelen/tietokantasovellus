@@ -1,33 +1,33 @@
-CREATE TABLE Kayttajat (
+CREATE TABLE Users (
 	id SERIAL PRIMARY KEY,
-	kayttajanimi TEXT UNIQUE,
-	salasana TEXT
+	username TEXT UNIQUE,
+	password TEXT
 );
 
-CREATE TABLE Maat (
+CREATE TABLE Countries (
 	id SERIAL PRIMARY KEY,
-	maan_nimi TEXT UNIQUE
+	name TEXT UNIQUE
 );
 
-CREATE TABLE Kappaleet_2021 (
+CREATE TABLE Songs_2021 (
         id SERIAL PRIMARY KEY,
-        maa_id INTEGER REFERENCES Maat,
-        laulaja TEXT,
-        laulu TEXT
+        country_id INTEGER REFERENCES Maat,
+        singer TEXT,
+        song TEXT
 );
 
 
-CREATE TABLE Kommentit (
+CREATE TABLE Comments (
 	id SERIAL PRIMARY KEY,
-	kayttaja_id INTEGER REFERENCES Kayttajat,
-	laulu_id INTEGER REFERENCES Kappaleet_2021,
-	sisalto TEXT,
-	lahetetty TIMESTAMP
+	user_id INTEGER REFERENCES Kayttajat,
+	song_id INTEGER REFERENCES Kappaleet_2021,
+	message TEXT,
+	sent TIMESTAMP
 );
 
-CREATE TABLE Pisteet (
-	kayttaja_id INTEGER REFERENCES Kayttajat,
-	laulu_id INTEGER REFERENCES Kappaleet_2021,
-	pisteet INTEGER
+CREATE TABLE Points (
+	user_id INTEGER REFERENCES Kayttajat,
+	song_id INTEGER REFERENCES Kappaleet_2021,
+	points INTEGER
 );
 

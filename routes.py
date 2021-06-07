@@ -22,8 +22,7 @@ def login():
                         return redirect("/")
                 else:
                         error = "Väärä käyttäjänimi tai salasana"
-                        flash(error)
-                        #return redirect("/")
+                        return render_template("error.html", message=error)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -39,5 +38,6 @@ def register():
                 if users.register(username,password):
                         return redirect("/")
                 else:
-                        return redirect("/")
+                        error = "Rekisteröityminen epäonnistui."
+                        return render_template("error.html", message=error)
 

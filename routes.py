@@ -39,9 +39,5 @@ def register():
                         return redirect("/")
                 else:
                         message = "Rekisteröityminen epäonnistui."
-                        error(message)
-
-@app.route("/error")
-def error(message):
-        return render_template("error.html", message=message)
+                        return render_template("error.html", message=message)
 

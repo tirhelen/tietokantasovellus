@@ -9,13 +9,16 @@ def login(username, password):
 	user = result.fetchone()
 
 	if user == None:
+		print("kayttaja ei loytynyt")
 		return False
 
 	else:
 		if check_password_hash(user[0], password):
+			print("oikein")
 			session["user_id"] = user[1]
 			return True
 		else:
+			print("vaarin")
 			return False
 
 
@@ -30,7 +33,9 @@ def register(username, password):
 		sql = "INSERT INTO Users (username, password) VALUES (:username,:password)"
 		database.session.execute(sql, {"username":username, "password":hash})
 		database.session.commit()
+		print("testi")
 	except:
+		print("fail")
 		return False
 		
 	return login(username, password)

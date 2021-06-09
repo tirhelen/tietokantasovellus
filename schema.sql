@@ -11,7 +11,7 @@ CREATE TABLE Countries (
 
 CREATE TABLE Songs_2021 (
         id SERIAL PRIMARY KEY,
-        country_id INTEGER REFERENCES Maat,
+        country_id INTEGER REFERENCES Countries,
         singer TEXT,
         song TEXT
 );
@@ -19,15 +19,15 @@ CREATE TABLE Songs_2021 (
 
 CREATE TABLE Comments (
 	id SERIAL PRIMARY KEY,
-	user_id INTEGER REFERENCES Kayttajat,
-	song_id INTEGER REFERENCES Kappaleet_2021,
+	user_id INTEGER REFERENCES Users,
+	song_id INTEGER REFERENCES Songs_2021,
 	message TEXT,
 	sent TIMESTAMP
 );
 
 CREATE TABLE Points (
-	user_id INTEGER REFERENCES Kayttajat,
-	song_id INTEGER REFERENCES Kappaleet_2021,
+	user_id INTEGER REFERENCES Users,
+	song_id INTEGER REFERENCES Songs_2021,
 	points INTEGER
 );
 

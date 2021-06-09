@@ -7,7 +7,7 @@ def login(username, password):
 	sql = "SELECT password, id FROM Users WHERE username=:username"
 	result = database.session.execute(sql, {"username":username})
 	user = result.fetchone()
-
+	print("testinen")
 	if user == None:
 		print("kayttaja ei loytynyt")
 		return False

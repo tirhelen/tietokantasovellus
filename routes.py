@@ -55,9 +55,9 @@ def list_page():
         
         if request.method == "POST": 
                 country = request.form["country"]
-                sql = "SELECT id FROM countries WHERE name =:country"
+                sql = "SELECT id FROM countries WHERE name=:country"
                 result = database.session.execute(sql, {"country":country})
-                id = result.fetchone()
+                id = result.fetchone()[0]
                 print(id)
                 return redirect(f"/country/{id}")
 

@@ -1,49 +1,9 @@
 from database import database
 
 def get_list():
-    #sql = "SELECT name FROM countries ORDER BY name"
-    #result = database.session.execute(sql)
-    #return result.fetchall()
-    list = ["Albania",
-            "Australia",
-            "Azerbaijan",
-            "Belgia",
-            "Bulgaria",
-            "Espanja",
-            "Georgia",
-            "Irlanti",
-            "Islanti",
-            "Iso-Britannia",
-            "Israel",
-            "Italia",
-            "Itävalta",
-            "Kreikka",
-            "Kroatia",
-            "Kypros",
-            "Latvia",
-            "Liettua",
-            "Malta",
-            "Moldova",
-            "Norja",
-            "Pohjois-Makedonia",
-            "Portugali",
-            "Puola",
-            "Ranska",
-            "Romania",
-            "Ruotsi",
-            "Saksa",
-            "San Marino",
-            "Serbia",
-            "Slovenia",
-            "Suomi",
-            "Sveitsi",
-            "Tanska",
-            "Tsekki",
-            "Ukraina",
-            "Venäjä",
-            "Viro"]
-    #result = database.session.execute(sql)
-    #return result.fetchall()
+    sql = "SELECT name FROM countries ORDER BY name"
+    result = database.session.execute(sql)
+    list = result.fetchall()
     return list
 
 def country_id(country):
@@ -56,7 +16,7 @@ def country_id(country):
 def country_name(id):
     sql = "SELECT name FROM countries WHERE id=:country_id"
     result = database.session.execute(sql, {"country_id":id})
-    name = str(result.fetchone())
+    name = str(result.fetchone()[0])
     return name
 
 

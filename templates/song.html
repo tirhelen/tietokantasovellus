@@ -1,15 +1,29 @@
 Maa: {{ country }} <br>
 Kappale: {{ song[0] }} - {{ song[1] }}
 <p>
+
 {% if session.user_id %}
+{% if points == None %}
+
+Et ole vielä antanut pisteitä <br>
+<form action="/country/{{ id }}" method="POST">
+Anna pisteet asteikolla 0-12 (kirjoita numeroina): 
+<input type="text" name="points"> <br>
+<input type="submit" value="Ok"> <br>
+<p>
+{% else %}
 Pisteet: {{ points }}
+{% endif %}
+
 <form action="/country/{{ id }}" method="POST">
 Uusi kommentti: <br>
 <textarea name="message" rows="10" cols="50">
 </textarea> <br>
 <input type="submit" value="Lähetä">
 </form>
+
 {% endif %}
+
 <p>
 Kommentit: <br>
 <p>
@@ -19,4 +33,3 @@ Kommentti: {{ message[0] }} <br>
 Lähetetty: {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }}
 <p>
 {% endfor %}
-

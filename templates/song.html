@@ -1,10 +1,22 @@
-Maa: <br>
+Maa: {{ country }} <br>
+Kappale: {{ song[0] }} - {{ song[1] }}
 <p>
-Pisteet:
-<form action="/send" method="POST">
-Kommentti: <br>
+{% if session.user_id %}
+Pisteet: {{ points }}
+<form action="/country/{{ id }}" method="POST">
+Uusi kommentti: <br>
 <textarea name="message" rows="10" cols="50">
 </textarea> <br>
 <input type="submit" value="Lähetä">
 </form>
+{% endif %}
+<p>
+Kommentit: <br>
+<p>
+{% for message in messages %}
+Lähettäjä: {{ message[1] }} <br>
+Kommentti: {{ message[0] }} <br>
+Lähetetty: {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }}
+<p>
+{% endfor %}
 

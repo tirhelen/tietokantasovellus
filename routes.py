@@ -42,17 +42,13 @@ def register():
                         message = "Rekisteröityminen epäonnistui."
                         return render_template("error.html", message=message)
 
-                
 @app.route("/logout")
 def logout():
-        
         users.logout()
         return redirect("/")
 
-
 @app.route("/list", methods=["GET","POST"])
 def list_page():
-        
         if request.method == "GET":
                 return render_template("country_list.html", countries=countries.get_list())
         
@@ -61,23 +57,20 @@ def list_page():
                 id = countries.country_id(country)
                 return redirect(f"/country/{id}")
 
-        
 @app.route("/country/<int:id>", methods=["GET", "POST"])
 def country_page(id):
-        
         country = countries.country_name(id)
         song = countries.song_and_singer(id)
         points = user_content.get_points(id)
-        if points == None:
-                points = "Et ole vielä antanut pisteitä"
-                
         messages = user_content.get_messages(id)
         
         if request.method == "POST":
                 message = request.form["message"]
-                
                 if not user_content.send_message(message, id):
                         return render_template("error.html", message="Viestin lähettämisessä tapahtui virhe.")
                 
-        return render_template("song.html", id=id, song=song, country=country, points=points, messages=messages)
+                points = request.form["points"]
+                if not user_content.add_points(points, id):
+                        return render_template("error.html", message="Virhe pisteiden lisäämisessä")
 
+        return render_template("song.html", id=id, song=song, country=country, points=points, messages=messages)

@@ -2,6 +2,7 @@ from app import app
 from flask import render_template, request, redirect, flash
 import users
 import countries
+import user_content
 
 @app.route("/")
 def index():
@@ -46,21 +47,29 @@ def logout():
         users.logout()
         return redirect("/")
 
-
-
-@app.route("/list")
+@app.route("/list", methods=["GET","POST"])
 def list_page():
         if request.method == "GET":
                 return render_template("country_list.html", countries=countries.get_list())
         
         if request.method == "POST": 
                 country = request.form["country"]
-                sql = "SELECT id FROM countries WHERE name=:country"
-                result = database.session.execute(sql, {"country":country})
-                id = int(result.fetchone()[0])
-                print(id)
+                id = countries.country_id(country)
                 return redirect(f"/country/{id}")
 
-@app.route("/country/<int:id>")
+@app.route("/country/<int:id>", methods=["GET", "POST"])
 def country_page(id):
-        return render_template("song.html", id=id)
+        if request.method == "GET":
+                country = countries.country_name(id)
+                song = countries.song_and_singer(id)
+                points = user_content.get_points(id)
+                if points == None:
+                        points = "Et ole vielä antanut pisteitä"
+                messages = user_content.get_messages(id)
+        
+        if request.method == "POST":
+                message = request.form["message"]
+                if not user_content.send_message(message, id):
+                        return render_template("error.html", message="Viestin lähettämisessä tapahtui virhe.")
+
+        return render_template("song.html", id=id, song=song, country=country, points=points, messages=messages)

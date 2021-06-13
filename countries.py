@@ -49,14 +49,14 @@ def get_list():
 def country_id(country):
     sql = "SELECT id FROM countries WHERE name =:country"
     result = database.session.execute(sql, {"country":country})
-    id = result.fetchone()[0]
+    id = result.fetchone()
     return id
 
 
 def country_name(id):
     sql = "SELECT name FROM countries WHERE id=:country_id"
     result = database.session.execute(sql, {"country_id":id})
-    name = str(result.fetchone()[0])
+    name = str(result.fetchone())
     return name
 
 

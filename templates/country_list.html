@@ -2,7 +2,7 @@ Valitse maa:
 <form action="/list" method="POST">
 <select name="country">
 {% for country in countries %}
-<option value={{ country }} >
+<option value={{ country }} > {{ country }}
 {% endfor %}
 </select>
 <input type="submit" value="Ok">

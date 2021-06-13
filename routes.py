@@ -58,6 +58,7 @@ def list_page():
                 sql = "SELECT id FROM countries WHERE name =:country"
                 result = database.session.execute(sql, {"country":country})
                 id = result.fetchone()[0]
+                print(id)
                 return redirect(f"/country/{id}")
 
 @app.route("/country/<int:id>")

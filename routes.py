@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template, request, redirect, flash
 import users
+import countries
 
 @app.route("/")
 def index():
@@ -48,7 +49,7 @@ def logout():
 @app.route("/list", methods=["GET","POST"])
 def list_page():
         if request.method == "GET":
-                return render_template("country_list.html", countries = countries.get_list())
+                return render_template("country_list.html", countries=countries.get_list())
         
         #if request.method == "POST": 
                 #country = request.form[""]

@@ -11,7 +11,6 @@ Sovelluksessa tulee olemaan tavallinen käyttäjärooli sekä ylläpitäjärooli
 Sovellus voisi myös tilastoida esim. mitkä maat kaikkien pisteytettyjen vuosien perusteella olleet käyttäjän suosikkeja (ehkä)
 
 Nykytilanne:
-Sovellukseen voi luoda käyttäjätilin ja kirjautua sisään.
-Epäonnistunutta käyttäjätilin luontia / sisäänkirjautumista ei vielä käsitellä.
-Sovelluksessa ei voi vielä tehdä mitään.
+Sovellukseen voi luoda käyttäjätilin ja kirjautua sisään. Käyttäjä voi myös kirjautua ulos.
+Käyttäjä voi kirjoittaa kommentteja biiseistä ja lukea muiden kommentteja.
 Sovellus löytyy Herokusta osoitteesta:  https://tsoha-euron-visiot.herokuapp.com/

@@ -46,10 +46,10 @@ def logout():
         users.logout()
         return redirect("/")
 
-@app.route("/list", methods=["GET","POST"])
+@app.route("/list")
 def list_page():
-        if request.method == "GET":
-                return render_template("country_list.html", countries=countries.get_list())
+        #if request.method == "GET":
+        return render_template("country_list.html", countries=countries.get_list())
         
         #if request.method == "POST": 
                 #country = request.form[""]

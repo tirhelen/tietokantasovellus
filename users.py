@@ -7,7 +7,6 @@ def login(username, password):
 	sql = "SELECT password, id FROM Users WHERE username=:username"
 	result = database.session.execute(sql, {"username":username})
 	user = result.fetchone()
-
 	if user == None:
 		return False
 
@@ -31,8 +30,6 @@ def register(username, password):
 		database.session.execute(sql, {"username":username, "password":hash})
 		database.session.commit()
 	except:
-
 		return False
 		
 	return login(username, password)
- 

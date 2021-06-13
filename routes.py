@@ -1,6 +1,5 @@
 from app import app
 from flask import render_template, request, redirect, flash
-import users
 
 
 @app.route("/")
@@ -41,3 +40,19 @@ def register():
                         message = "Rekisteröityminen epäonnistui."
                         return render_template("error.html", message=message)
 
+@app.route("/logout")
+def logout():
+        users.logout()
+        return redirect("/")
+
+@app.route("/list", methods=["GET","POST"])
+def list_page():
+        if request.method == "GET":
+                return render_template("country_list.html", countries = countries.get_list())
+        
+        #if request.method == "POST": 
+                #country = request.form[""]
+
+@app.route("/country/<int:id>")
+def country_page(id):
+        return render_template("song.html", id=id)

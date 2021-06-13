@@ -46,13 +46,19 @@ def logout():
         users.logout()
         return redirect("/")
 
+
+
 @app.route("/list")
 def list_page():
-        #if request.method == "GET":
+        if request.method == "GET":
         return render_template("country_list.html", countries=countries.get_list())
         
-        #if request.method == "POST": 
-                #country = request.form[""]
+        if request.method == "POST": 
+                country = request.form["country"]
+                sql = "SELECT id FROM countries WHERE name =:country"
+                result = database.session.execute(sql, {"country":country})
+                id = result.fetchone()[0]
+                return redirect(f"/country/{id}")
 
 @app.route("/country/<int:id>")
 def country_page(id):

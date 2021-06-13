@@ -1,5 +1,9 @@
-<ul>
+Valitse maa:
+<form action="/list" method="POST">
+<select name="country">
 {% for country in countries %}
-<li> {{ country }}
+<option value={{ country }} >
 {% endfor %}
-</ul>
+</select>
+<input type="submit" value="Ok">
+</form>

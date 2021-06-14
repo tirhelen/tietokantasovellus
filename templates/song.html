@@ -5,14 +5,9 @@ Kappale: {{ song[0] }} - {{ song[1] }}
 {% if session.user_id %}
 {% if points == None %}
 
-Et ole vielä antanut pisteitä <br>
-<form action="/country/{{ id }}" method="POST">
-Anna pisteet asteikolla 0-12 (kirjoita numeroina): 
-<input type="text" name="points"> <br>
-<input type="submit" value="Ok"> <br>
-<p>
+Anna pisteesi <a href="/points/{{ id }}">täällä</a> <br>
 {% else %}
-Pisteet: {{ points }}
+Pisteet: {{ points[0] }}
 {% endif %}
 
 <form action="/country/{{ id }}" method="POST">

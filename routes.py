@@ -68,9 +68,19 @@ def country_page(id):
                 message = request.form["message"]
                 if not user_content.send_message(message, id):
                         return render_template("error.html", message="Viestin lähettämisessä tapahtui virhe.")
-                
+
+        return render_template("song.html", id=id, song=song, country=country, points=points, messages=messages)
+
+
+@app.route("/points/<int:id>", methods=["GET","POST"])
+def points(id):
+        if request.method == "POST":
                 points = request.form["points"]
                 if not user_content.add_points(points, id):
                         return render_template("error.html", message="Virhe pisteiden lisäämisessä")
 
-        return render_template("song.html", id=id, song=song, country=country, points=points, messages=messages)
+        return render_template("points.html", id=id)
+
+@app.route("/user/<int:user_id>", methods=["GET"])
+def user_page(user_id):
+        return render_template("user_page.html", countries=user_content.get_all_points())

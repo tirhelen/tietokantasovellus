@@ -38,3 +38,12 @@ def add_points(points, country_id):
     database.session.execute(sql, {"user_id":user_id, "song_id":country_id, "points":points})
     database.session.commit()
     return True
+
+
+def get_all_points():
+    user_id = users.user_id()
+    if user_id == 0:
+        return None
+    sql = "SELECT C.name, P.points FROM countries C, points P WHERE user_id=:user_id AND C.id=P.song_id"
+    result = database.session.execute(sql, {"user_id":user_id})
+    return result.fetchall()

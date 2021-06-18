@@ -1,3 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}{{ country }}{% endblock %}
+{% block content %}
+
+{% if error %}
+{{ error }}
+{% endif %}
+<br>
+<p>
 Maa: {{ country }} <br>
 Kappale: {{ song[0] }} - {{ song[1] }}
 <p>
@@ -15,6 +24,7 @@ Uusi kommentti: <br>
 <textarea name="message" rows="10" cols="50">
 </textarea> <br>
 <input type="submit" value="Lähetä">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 
 {% endif %}
@@ -28,3 +38,5 @@ Kommentti: {{ message[0] }} <br>
 Lähetetty: {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }}
 <p>
 {% endfor %}
+
+{% endblock %}

@@ -1,5 +1,14 @@
+{% extends "layout.html" %}
+{% block title %}Rekisteröinti{% endblock %}
+{% block content %}
+{% if error %}
+{{ error }}
+{% endif %}
+
 <form action="/register" method="post">
 Valitse käyttäjänimi: <input type="text" name="username">
 Valitse salasana: <input type="password" name="password">
 <input type="submit" value="Luo käyttäjätili">
 </form>
+
+{% endblock %}

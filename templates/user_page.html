@@ -1,5 +1,9 @@
+{% extends "layout.html" %}
+{% block title %}{{ country }}{% endblock %}
+{% block content %}
 <ul>
 {% for country in countries %}
 <li> {{ country[0] }} - {{ country [1] }}
 {% endfor %}
 </ul>
+{% endblock %}

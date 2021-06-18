@@ -1,5 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}Pisteytys{% endblock %}
+{% block content %}
+
+{% if error %}
+{{ error }}
+{% endif %}
+<p>
+
 <form action="/points/{{ id }}" method="POST">
 Anna pisteet asteikolla 0-12 (kirjoita numeroina): 
 <input type="text" name="points"> <br>
 <input type="submit" value="Ok"> <br>
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+{% endblock %}

@@ -1,5 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}Sisäänkirjautuminen{% endblock %}
+{% block content %}
+
+{% if error %}
+{{ error }}
+{% endif %}
+
 <form action="/login" method="post">
 Käyttäjänimi: <input type="text" name="username">
 Salasana: <input type="password" name="password">
 <input type="submit" value="Kirjaudu">
 </form>
+
+{% endblock %}

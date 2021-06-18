@@ -1,0 +1,11 @@
+<title>Euron visiot <p> {% block title %}{% endblock %}</title> <br>
+<a href="/">Etusivulle</a>
+{% if session.user_id %}
+<a href="/logout">Kirjaudu ulos</a> <p>
+<a href="/user/{{ session.user_id }}">Kooste pisteistäsi</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a> <p>
+{% endif %}
+<a href="/list">Palaa valitsemaan maa</a>
+<hr>
+{% block content %}{% endblock %}

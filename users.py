@@ -1,6 +1,8 @@
 from flask import session
 from database import database
 from werkzeug.security import check_password_hash, generate_password_hash
+from secrets import token_hex
+
 
 def login(username, password):
 
@@ -13,6 +15,7 @@ def login(username, password):
 	else:
 		if check_password_hash(user[0], password):
 			session["user_id"] = user[1]
+			session["csrf_token"] = token_hex(16)
 			return True
 		else:
 			return False
@@ -36,3 +39,13 @@ def register(username, password):
 
 def user_id():
 	return session.get("user_id", 0)
+
+def is_username_available(username):
+	sql = "SELECT id FROM Users WHERE username=:username"
+	result = database.session.execute(sql, {"username":username})
+	id = result.fetchone()
+	if id is not None:
+		return False
+	else:
+		return True
+

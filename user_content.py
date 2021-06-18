@@ -1,16 +1,25 @@
 from database import database
 import users
+from flask import session
 
 
 def send_message(message, country_id):
+
     user_id = users.user_id()
     if user_id == 0:
         return False
-    if len(message) > 0:
-        sql = "INSERT INTO comments (user_id, song_id, message, sent) VALUES (:user_id, :song_id, :message, NOW())"
-        database.session.execute(sql, {"user_id":user_id, "song_id":country_id, "message":message})
-        database.session.commit()
-        return True
+    if 0 < len(message) < 5000:
+        # checking if user is trying to send the same message again
+        sql = "SELECT id FROM comments WHERE user_id=:user_id AND message=:message AND song_id=:song_id"
+        result = database.session.execute(sql, {"user_id":user_id, "message":message, "song_id":country_id})
+        id = result.fetchone()
+        if id is not None:
+            return False
+        else:
+            sql = "INSERT INTO comments (user_id, song_id, message, sent) VALUES (:user_id, :song_id, :message, NOW())"
+            database.session.execute(sql, {"user_id":user_id, "song_id":country_id, "message":message})
+            database.session.commit()
+            return True
     else:
         return False
 
@@ -34,10 +43,17 @@ def add_points(points, country_id):
     user_id = users.user_id()
     if user_id == 0:
         return False
-    sql = "INSERT INTO points (user_id, song_id, points) VALUES (:user_id, :song_id, :points)"
-    database.session.execute(sql, {"user_id":user_id, "song_id":country_id, "points":points})
-    database.session.commit()
-    return True
+    try:
+        points = int(points)
+    except:
+        return False
+    if 0 < int(points) < 12:
+        sql = "INSERT INTO points (user_id, song_id, points) VALUES (:user_id, :song_id, :points)"
+        database.session.execute(sql, {"user_id":user_id, "song_id":country_id, "points":points})
+        database.session.commit()
+        return True
+    else:
+        return False
 
 
 def get_all_points():

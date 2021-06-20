@@ -3,7 +3,12 @@
 {% block content %}
 <ul>
 {% for country in countries %}
-<li> {{ country[0] }} - {{ country [1] }}
+<li> <b> {{ country[0] }} - {{ country [1] }} </b> <br>
+{% for message in messages %}
+{% if message[0] == country[0] %}
+{{ message[1] }} <br>
+{% endif %}
+{% endfor %}
 {% endfor %}
 </ul>
 {% endblock %}

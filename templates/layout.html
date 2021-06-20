@@ -2,10 +2,10 @@
 <a href="/">Etusivulle</a>
 {% if session.user_id %}
 <a href="/logout">Kirjaudu ulos</a> <p>
-<a href="/user/{{ session.user_id }}">Kooste pisteistäsi</a>
+<a href="/user/{{ session.user_id }}">Oma kooste</a>
 {% else %}
 <a href="/login">Kirjaudu sisään</a> <p>
 {% endif %}
-<a href="/list">Palaa valitsemaan maa</a>
+<a href="/list">Valitse maa</a>
 <hr>
 {% block content %}{% endblock %}

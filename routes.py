@@ -78,7 +78,7 @@ def country_page(id):
         country = countries.country_name(id)
         song = countries.song_and_singer(id)
         points = user_content.get_points(id)
-        messages = user_content.get_messages(id)
+        messages = user_content.get_messages(id, None)
 
         if request.method == "POST":
                 message = request.form["message"]
@@ -116,4 +116,4 @@ def points(id):
 
 @app.route("/user/<int:user_id>", methods=["GET"])
 def user_page(user_id):
-        return render_template("user_page.html", countries=user_content.get_all_points())
+        return render_template("user_page.html", countries=user_content.get_all_points(), messages=user_content.get_messages(None, user_id))

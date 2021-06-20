@@ -24,10 +24,15 @@ def send_message(message, country_id):
         return False
 
 
-def get_messages(country_id):
-    sql = "SELECT C.message, U.username, C.sent FROM comments C, users U WHERE C.user_id=U.id AND C.song_id=:country_id"
-    result = database.session.execute(sql, {"country_id":country_id})
-    return result.fetchall()
+def get_messages(country_id, user_id):
+    if user_id is None:
+        sql = "SELECT C.message, U.username, C.sent FROM comments C, users U WHERE C.user_id=U.id AND C.song_id=:country_id"
+        result = database.session.execute(sql, {"country_id":country_id})
+        return result.fetchall()
+    else:
+        sql = "SELECT S.name, C.message, C.sent FROM comments C, countries S WHERE user_id=:user_id AND S.id=C.song_id"
+        result = database.session.execute(sql, {"user_id":user_id})
+        return result.fetchall()
 
 
 def get_points(country_id):
@@ -77,7 +82,7 @@ def get_all_points():
     user_id = users.user_id()
     if user_id == 0:
         return None
-    sql = "SELECT C.name, P.points FROM countries C, points P WHERE user_id=:user_id AND C.id=P.song_id"
+    sql = "SELECT C.name, P.points FROM countries C, points P WHERE user_id=:user_id AND C.id=P.song_id ORDER BY P.points DESC"
     result = database.session.execute(sql, {"user_id":user_id})
     return result.fetchall()
 

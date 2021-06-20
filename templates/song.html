@@ -14,9 +14,10 @@ Kappale: {{ song[0] }} - {{ song[1] }}
 {% if session.user_id %}
 {% if points == None %}
 
-Anna pisteesi <a href="/points/{{ id }}">täällä</a> <br>
+<a href="/points/{{ id }}">Anna pisteet</a> <br>
 {% else %}
-Pisteet: {{ points[0] }}
+Pisteet: {{ points[0] }} <br>
+<a href="/points/{{ id }}">Päivitä pisteet</a> <br>
 {% endif %}
 
 <form action="/country/{{ id }}" method="POST">

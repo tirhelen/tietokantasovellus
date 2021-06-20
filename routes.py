@@ -58,6 +58,7 @@ def logout():
         users.logout()
         return redirect("/")
 
+
 @app.route("/list", methods=["GET","POST"])
 def list_page():
         if request.method == "GET":
@@ -70,6 +71,7 @@ def list_page():
                 id = countries.country_id(country)
                 return redirect(f"/country/{id}")
 
+
 @app.route("/country/<int:id>", methods=["GET", "POST"])
 def country_page(id):
         error = None
@@ -77,7 +79,7 @@ def country_page(id):
         song = countries.song_and_singer(id)
         points = user_content.get_points(id)
         messages = user_content.get_messages(id)
-        
+
         if request.method == "POST":
                 message = request.form["message"]
                 if session["csrf_token"] != request.form["csrf_token"]:
@@ -93,17 +95,24 @@ def country_page(id):
 @app.route("/points/<int:id>", methods=["GET","POST"])
 def points(id):
         error = None
-
+        update_ability = user_content.can_update_points(id)
         if request.method == "POST":
                 points = request.form["points"]
                 if session["csrf_token"] != request.form["csrf_token"]:
                         abort(403)
-                if not user_content.add_points(points, id):
-                        error = "Virhe pisteiden lisäämisessä. Huom. pisteet tulee olla väliltä 0-12 ja kirjoitettuna numeroina."
+                if not update_ability:
+                        if not user_content.add_points(points, id):
+                                error = "Virhe pisteiden lisäämisessä. Huom. pisteet tulee olla väliltä 0-12 ja kirjoitettuna numeroina."
+                        else:
+                                return redirect(f"/country/{id}")
                 else:
-                        return redirect(f"/country/{id}")
+                        if not user_content.update_points(points, id):
+                                error = "Virhe pisteiden päivittämisessä. Huom. pisteet tulee olla väliltä 0-12 ja kirjoitettuna numeroina."
+                        else:
+                                return redirect(f"/country/{id}")
 
         return render_template("points.html", id=id, error=error)
+
 
 @app.route("/user/<int:user_id>", methods=["GET"])
 def user_page(user_id):

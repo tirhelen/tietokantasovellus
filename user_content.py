@@ -47,9 +47,26 @@ def add_points(points, country_id):
         points = int(points)
     except:
         return False
-    if 0 < int(points) < 12:
+    if 0 < int(points) <= 12:
         sql = "INSERT INTO points (user_id, song_id, points) VALUES (:user_id, :song_id, :points)"
         database.session.execute(sql, {"user_id":user_id, "song_id":country_id, "points":points})
+        database.session.commit()
+        return True
+    else:
+        return False
+
+
+def update_points(points, country_id):
+    user_id = users.user_id()
+    if user_id == 0:
+        return False
+    try:
+        points = int(points)
+    except:
+        return False
+    if 0 < int(points) <= 12:
+        sql = "UPDATE points SET points=:points WHERE user_id=:user_id AND song_id=:country_id"
+        database.session.execute(sql, {"points":points, "user_id":user_id, "country_id":country_id})
         database.session.commit()
         return True
     else:
@@ -63,3 +80,13 @@ def get_all_points():
     sql = "SELECT C.name, P.points FROM countries C, points P WHERE user_id=:user_id AND C.id=P.song_id"
     result = database.session.execute(sql, {"user_id":user_id})
     return result.fetchall()
+
+
+def can_update_points(country_id):
+    user_id = users.user_id()
+    sql = "SELECT points FROM points WHERE user_id=:user_id AND song_id=:country_id"
+    result = database.session.execute(sql, {"user_id":user_id, "country_id":country_id})
+    if result.fetchone() is not None:
+        return True
+    else:
+        return False

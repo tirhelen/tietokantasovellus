@@ -1,14 +1,29 @@
 {% extends "layout.html" %}
 {% block title %}{{ country }}{% endblock %}
 {% block content %}
+
+{% if error %}
+{{ error }}
+
+{% else %}
 <ul>
+
 {% for country in countries %}
 <li> <b> {{ country[0] }} - {{ country [1] }} </b> <br>
+
 {% for message in messages %}
+
 {% if message[0] == country[0] %}
 {{ message[1] }} <br>
+
+{% if message[3] == "false" %}
+{{ message[1] }} <br>
+Huom. ylläpitäjä on poistanut tämän viestin keskustelualueelta.
+
+{% endif %}
 {% endif %}
 {% endfor %}
 {% endfor %}
 </ul>
+{% endif %}
 {% endblock %}

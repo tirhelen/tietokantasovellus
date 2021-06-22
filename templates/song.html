@@ -36,8 +36,13 @@ Kommentit: <br>
 {% for message in messages %}
 Lähettäjä: {{ message[1] }} <br>
 Kommentti: {{ message[0] }} <br>
-Lähetetty: {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }}
+Lähetetty: {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }} <br>
+
+{% if session.is_admin %}
+<a href="/delete/{{ message[3] }}">Poista tämä viesti</a> <br>
 <p>
+<p>
+{% endif %}
 {% endfor %}
 
 {% endblock %}

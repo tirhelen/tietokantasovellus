@@ -1,21 +1,34 @@
 <!DOCTYPE htlm>
 
-<title>Euron visiot</title>
-<h1>Euron visiot</h1>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 
-{% if session.user_id %}
-Hei, olet kirjautunut sisään. <br>
-{% endif %}
-Tervetuloa käyttämään Euron visiot-sivua! <br>
-Tällä sivulla voit pisteyttää vuoden Euroviisu-biisejä sekä kommentoida niitä. <br>
-<p>
-{% if session.user_id %}
-Pääset pisteyttämään ja kommentoimaan biisejä <a href="/list">täältä</a> <br>
-Voit katsoa koosteen pisteistäsi ja kommenteistasi <a href="/user/{{ session.user_id }}">täältä</a> <br>
-<a href="/logout">Kirjaudu ulos</a>
-{% else %}
-Voit kirjautua sisään <a href="/login">tästä</a> <br>
-Voit luoda käyttäjätilin <a href="/register">tästä</a>
-<p>
-Voit lukea muiden kommentteja <a href="/list">täältä</a>
-{% endif %}
+<title>Euron visiot</title>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <h1>Euron visiot</h1>
+            <p>
+            <p>
+            {% if session.user_id %}
+            Hei, olet kirjautunut sisään. <br>
+            <p>
+            {% endif %}
+            Tervetuloa käyttämään Euron visiot-sivua! <br>
+            Tällä sivulla voit pisteyttää vuoden Euroviisu-biisejä sekä kommentoida niitä. <br>
+            <p>
+            {% if session.user_id %}
+            Pääset pisteyttämään ja kommentoimaan biisejä <a href="/list">täältä</a> <br>
+            Voit katsoa koosteen pisteistäsi ja kommenteistasi <a href="/user/{{ session.user_id }}">täältä</a> <br>
+            <p>
+            <a href="/logout">Kirjaudu ulos</a>
+            {% else %}
+            Voit kirjautua sisään <a href="/login">tästä</a> <br>
+            Voit luoda käyttäjätilin <a href="/register">tästä</a>
+            <p>
+            Voit lukea muiden kommentteja <a href="/list">täältä</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

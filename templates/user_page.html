@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}{{ country }}{% endblock %}
+{% block title %}Pistekooste{% endblock %}
 {% block content %}
 
 {% if error %}
@@ -8,6 +8,9 @@
 {% else %}
 <ul>
 
+{% if countries == [] %}
+Et ole vielä pisteyttänyt yhtään kappaletta. 
+{% else %}
 {% for country in countries %}
 <li> <b> {{ country[0] }} - {{ country [1] }} </b> <br>
 
@@ -17,13 +20,14 @@
 {{ message[1] }} <br>
 
 {% if message[3] == "false" %}
-{{ message[1] }} <br>
-Huom. ylläpitäjä on poistanut tämän viestin keskustelualueelta.
+Huom. ylläpitäjä on poistanut tämän viestin keskustelualueelta. <br>
 
 {% endif %}
 {% endif %}
 {% endfor %}
 {% endfor %}
+
 </ul>
+{% endif %}
 {% endif %}
 {% endblock %}

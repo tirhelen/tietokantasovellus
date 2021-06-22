@@ -5,6 +5,7 @@ import users
 import countries
 import user_content
 
+
 @app.route("/")
 def index():
         return render_template("front_page.html")
@@ -16,6 +17,7 @@ def login():
         if request.method == "POST":
                 username = request.form["username"]
                 password = request.form["password"]
+
                 if users.login(username, password):
                         return redirect("/")
                 else:
@@ -65,8 +67,7 @@ def list_page():
                 return render_template("country_list.html", countries=countries.get_list())
         
         if request.method == "POST": 
-                if session["csrf_token"] != request.form["csrf_token"]:
-                        abort(403)
+
                 country = request.form["country"]
                 id = countries.country_id(country)
                 return redirect(f"/country/{id}")
@@ -96,15 +97,18 @@ def country_page(id):
 def points(id):
         error = None
         update_ability = user_content.can_update_points(id)
+
         if request.method == "POST":
                 points = request.form["points"]
                 if session["csrf_token"] != request.form["csrf_token"]:
                         abort(403)
+
                 if not update_ability:
                         if not user_content.add_points(points, id):
                                 error = "Virhe pisteiden lisäämisessä. Huom. pisteet tulee olla väliltä 0-12 ja kirjoitettuna numeroina."
                         else:
                                 return redirect(f"/country/{id}")
+
                 else:
                         if not user_content.update_points(points, id):
                                 error = "Virhe pisteiden päivittämisessä. Huom. pisteet tulee olla väliltä 0-12 ja kirjoitettuna numeroina."
@@ -113,15 +117,18 @@ def points(id):
 
         return render_template("points.html", id=id, error=error)
 
+
 @app.route("/delete/<int:id>")
 def delete_message(id):
         error = None
         user_id = users.user_id()
+
         if user_id == 0 or users.is_admin(user_id) is False:
                 error = "Ei oikeutta nähdä tätä sivua"
         else:
                 if user_content.delete_comment(id):
                         return redirect("/list")
+
         return render_template("delete_message.html", error=error)
         
 
@@ -129,7 +136,8 @@ def delete_message(id):
 @app.route("/user/<int:user_id>", methods=["GET"])
 def user_page(user_id):
         error = "Ei oikeutta nähdä tätä sivua"
+
         if users.user_id() != 0:
                 error = None
-        return render_template("user_page.html", countries=user_content.get_all_points(), messages=user_content.get_messages(None, user_id), error=error)
 
+        return render_template("user_page.html", countries=user_content.get_all_points(), messages=user_content.get_messages(None, user_id), error=error)

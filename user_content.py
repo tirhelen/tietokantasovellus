@@ -16,7 +16,7 @@ def send_message(message, country_id):
         if id is not None:
             return False
         else:
-            sql = "INSERT INTO comments (user_id, song_id, message, sent) VALUES (:user_id, :song_id, :message, NOW())"
+            sql = "INSERT INTO comments (user_id, song_id, message, sent, visible) VALUES (:user_id, :song_id, :message, NOW(), True)"
             database.session.execute(sql, {"user_id":user_id, "song_id":country_id, "message":message})
             database.session.commit()
             return True
@@ -26,11 +26,11 @@ def send_message(message, country_id):
 
 def get_messages(country_id, user_id):
     if user_id is None:
-        sql = "SELECT C.message, U.username, C.sent FROM comments C, users U WHERE C.user_id=U.id AND C.song_id=:country_id"
+        sql = "SELECT C.message, U.username, C.sent, C.id FROM comments C, users U WHERE C.user_id=U.id AND C.song_id=:country_id AND C.visible='true'"
         result = database.session.execute(sql, {"country_id":country_id})
         return result.fetchall()
     else:
-        sql = "SELECT S.name, C.message, C.sent FROM comments C, countries S WHERE user_id=:user_id AND S.id=C.song_id"
+        sql = "SELECT S.name, C.message, C.sent, C.visible FROM comments C, countries S WHERE user_id=:user_id AND S.id=C.song_id"
         result = database.session.execute(sql, {"user_id":user_id})
         return result.fetchall()
 
@@ -95,3 +95,18 @@ def can_update_points(country_id):
         return True
     else:
         return False
+
+
+def delete_comment(id):
+    user_id = users.user_id()
+    print("lol")
+    print(users.is_admin(user_id))
+    if user_id != 0 and users.is_admin(user_id):
+        print("jii")
+        sql = "UPDATE comments SET visible='false' WHERE id=:id"
+        result = database.session.execute(sql, {"id":id})
+        database.session.commit()
+        return True
+    else:
+        print("noob")
+        False

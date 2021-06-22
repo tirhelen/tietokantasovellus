@@ -6,7 +6,7 @@ from secrets import token_hex
 
 def login(username, password):
 
-	sql = "SELECT password, id FROM Users WHERE username=:username"
+	sql = "SELECT password, id, is_admin FROM Users WHERE username=:username"
 	result = database.session.execute(sql, {"username":username})
 	user = result.fetchone()
 	if user == None:
@@ -14,6 +14,7 @@ def login(username, password):
 
 	else:
 		if check_password_hash(user[0], password):
+			session["is_admin"] = user[2]
 			session["user_id"] = user[1]
 			session["csrf_token"] = token_hex(16)
 			return True
@@ -37,8 +38,10 @@ def register(username, password):
 		
 	return login(username, password)
 
+
 def user_id():
 	return session.get("user_id", 0)
+
 
 def is_username_available(username):
 	sql = "SELECT id FROM Users WHERE username=:username"
@@ -49,3 +52,12 @@ def is_username_available(username):
 	else:
 		return True
 
+
+def is_admin(id):
+	sql = "SELECT is_admin FROM Users WHERE id=:id"
+	result = database.session.execute(sql, {"id":id})
+	admin = result.fetchone()
+	if not admin[0]:
+		return False
+	else:
+		return True

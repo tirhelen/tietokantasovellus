@@ -113,7 +113,23 @@ def points(id):
 
         return render_template("points.html", id=id, error=error)
 
+@app.route("/delete/<int:id>")
+def delete_message(id):
+        error = None
+        user_id = users.user_id()
+        if user_id == 0 or users.is_admin(user_id) is False:
+                error = "Ei oikeutta nähdä tätä sivua"
+        else:
+                if user_content.delete_comment(id):
+                        return redirect("/list")
+        return render_template("delete_message.html", error=error)
+        
+
 
 @app.route("/user/<int:user_id>", methods=["GET"])
 def user_page(user_id):
-        return render_template("user_page.html", countries=user_content.get_all_points(), messages=user_content.get_messages(None, user_id))
+        error = "Ei oikeutta nähdä tätä sivua"
+        if users.user_id() != 0:
+                error = None
+        return render_template("user_page.html", countries=user_content.get_all_points(), messages=user_content.get_messages(None, user_id), error=error)
+

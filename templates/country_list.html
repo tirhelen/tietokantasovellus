@@ -1,8 +1,13 @@
+<!DOCTYPE HTML>
+
 {% extends "layout.html" %}
 {% block title %}Maalista{% endblock %}
+
 {% block content %}
+
 Valitse maa:
 <form action="/list" method="POST">
+
 <select name="country">
 {% for country in countries %}
 <option value={{ country[0] }} > {{ country[0] }}
@@ -11,4 +16,5 @@ Valitse maa:
 <input type="submit" value="Ok">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+
 {% endblock %}

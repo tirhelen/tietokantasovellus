@@ -2,6 +2,7 @@ CREATE TABLE Users (
 	id SERIAL PRIMARY KEY,
 	username TEXT UNIQUE,
 	password TEXT
+	is_admin BOOLEAN
 );
 
 CREATE TABLE Countries (
@@ -23,6 +24,7 @@ CREATE TABLE Comments (
 	song_id INTEGER REFERENCES Songs_2021,
 	message TEXT,
 	sent TIMESTAMP
+	visible BOOLEAN
 );
 
 CREATE TABLE Points (

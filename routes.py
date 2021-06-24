@@ -1,6 +1,5 @@
 from app import app
 from flask import render_template, request, redirect, flash, abort, session
-from secrets import token_hex
 import users
 import countries
 import user_content
@@ -22,7 +21,7 @@ def login():
                         return redirect("/")
                 else:
                         error = "Väärä käyttäjänimi tai salasana"
-        
+
         return render_template("login.html", error=error)
 
 
@@ -65,9 +64,8 @@ def logout():
 def list_page():
         if request.method == "GET":
                 return render_template("country_list.html", countries=countries.get_list())
-        
-        if request.method == "POST": 
 
+        if request.method == "POST":
                 country = request.form["country"]
                 id = countries.country_id(country)
                 return redirect(f"/country/{id}")
@@ -110,7 +108,8 @@ def points(id):
                                 return redirect(f"/country/{id}")
 
                 else:
-                        if not user_content.update_points(points, id):
+                        if user_content.update_points(points, id):
+                                return redirect(f"/country/{id}")
                                 error = "Virhe pisteiden päivittämisessä. Huom. pisteet tulee olla väliltä 0-12 ja kirjoitettuna numeroina."
                         else:
                                 return redirect(f"/country/{id}")
@@ -130,7 +129,7 @@ def delete_message(id):
                         return redirect("/list")
 
         return render_template("delete_message.html", error=error)
-        
+
 
 
 @app.route("/user/<int:user_id>", methods=["GET"])

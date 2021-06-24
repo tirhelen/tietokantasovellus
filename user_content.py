@@ -99,14 +99,10 @@ def can_update_points(country_id):
 
 def delete_comment(id):
     user_id = users.user_id()
-    print("lol")
-    print(users.is_admin(user_id))
     if user_id != 0 and users.is_admin(user_id):
-        print("jii")
         sql = "UPDATE comments SET visible='false' WHERE id=:id"
         result = database.session.execute(sql, {"id":id})
         database.session.commit()
         return True
     else:
-        print("noob")
         False

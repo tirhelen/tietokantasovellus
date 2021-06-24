@@ -128,7 +128,7 @@ def delete_message(id):
                 if user_content.delete_comment(id):
                         return redirect("/list")
 
-        return render_template("delete_message.html", error=error)
+        return render_template("error.html", error=error)
 
 
 

@@ -26,6 +26,9 @@ Sovelluksessa on myös ylläpitäjiä, jotka voivat tarvittaessa poistaa komment
 <p>
   
 <strong> Sovelluksen testaaminen: </strong> <br>
+UPDATE: Nettisivu ei ole enää käytössä.
+
+
 Sovellus löytyy osoitteesta: https://tsoha-euron-visiot.herokuapp.com/ <br>
 Sovellusta voi kokeilla tavallisena käyttäjänä tunnuksilla: <br>
 nimi: testityyppi <br>
